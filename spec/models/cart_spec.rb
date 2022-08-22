@@ -33,6 +33,23 @@ RSpec.describe Cart, type: :model do
     expect(cart.items.first.product.price).to be 10
   end
 
-  # it "每個 Cart Item 都可以計算它自己的金額（小計）" do
-  # end
+  it "每個 Cart Item 都可以計算它自己的金額（小計）" do
+    p1 = create(:product, price: 10)
+    cart = Cart.new
+
+    3.times { cart.add(p1.id) }
+
+    expect(cart.items.first.total_price).to be 30
+  end
+
+  it "可以計算整台購物車的總消費金額" do
+    p1 = create(:product, price: 10)
+    p2 = create(:product, price: 20)
+    cart = Cart.new
+
+    3.times { cart.add(p1.id) }
+    5.times { cart.add(p2.id) }
+
+    expect(cart.total_price).to be 130
+  end
 end

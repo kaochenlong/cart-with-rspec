@@ -22,4 +22,10 @@ class Cart
   def items
     @items
   end
+
+  def total_price
+    @items.reduce(0) { |acc, item|
+      acc + item.total_price
+    }
+  end
 end
