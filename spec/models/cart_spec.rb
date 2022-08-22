@@ -65,5 +65,18 @@ RSpec.describe Cart, type: :model do
     Timecop.travel(t)
 
     expect(cart.total_price).to be 117
+
+    Timecop.return
+  end
+
+  it "滿千送百" do
+    p1 = create(:product, price: 100)
+    p2 = create(:product, price: 200)
+    cart = Cart.new
+
+    3.times { cart.add(p1.id) }
+    5.times { cart.add(p2.id) }
+
+    expect(cart.total_price).to be 1200
   end
 end

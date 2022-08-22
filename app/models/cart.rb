@@ -30,9 +30,13 @@ class Cart
 
     if isXmas?
       total = (total * 0.9).floor
-    else
-      total
     end
+
+    if total > 1000
+      total = total - 100
+    end
+
+    total
   end
 
   private
