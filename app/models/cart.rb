@@ -3,10 +3,10 @@ class Cart
     @items = items
   end
 
-  def self.from_hash(hash)
+  def self.from_hash(hash = nil)
     items = []
 
-    if hash && hash[:items]
+    if hash.is_a?(Hash) && hash[:items]
       items = hash[:items].map { |item|
         CartItem.new(item[:product_id], item[:quantity])
       }
