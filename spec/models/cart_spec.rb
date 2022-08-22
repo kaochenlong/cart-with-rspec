@@ -79,13 +79,23 @@ RSpec.describe Cart, type: :model do
     3.times { cart.add(p1.id) }
     2.times { cart.add(p2.id) }
 
-    result = {
-      "items" => [
-        {"product_id" => 1, "quantity" => 3},
-        {"product_id" => 2, "quantity" => 2}
+    expect(cart.to_hash).to eq cart_hash
+  end
+
+  it "還原成購物車的內容" do
+    cart = Cart.from_hash(cart_hash)
+
+    expect(cart.items.first.product_id).to be 1
+    expect(cart.items.last.quantity).to be 2
+  end
+
+  private
+  def cart_hash
+    {
+      items: [
+        {product_id: 1, quantity: 3},
+        {product_id: 2, quantity: 2}
       ]
     }
-
-    expect(cart.to_hash).to eq result
   end
 end

@@ -1,14 +1,26 @@
 class Cart
-  def initialize
-    @items = []
+  def initialize(items = [])
+    @items = items
+  end
+
+  def self.from_hash(hash)
+    items = []
+
+    if hash && hash[:items]
+      items = hash[:items].map { |item|
+        CartItem.new(item[:product_id], item[:quantity])
+      }
+    end
+
+    new(items)
   end
 
   def to_hash
     {
-      "items" => @items.map { |item|
+      items: @items.map { |item|
         {
-          "product_id" => item.product_id,
-          "quantity" => item.quantity
+          product_id: item.product_id,
+          quantity: item.quantity
         }
       }
     }
