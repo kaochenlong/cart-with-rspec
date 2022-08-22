@@ -33,15 +33,6 @@ RSpec.describe Cart, type: :model do
     expect(cart.items.first.product.price).to be 10
   end
 
-  it "每個 Cart Item 都可以計算它自己的金額（小計）" do
-    p1 = create(:product, price: 10)
-    cart = Cart.new
-
-    3.times { cart.add(p1.id) }
-
-    expect(cart.items.first.total_price).to be 30
-  end
-
   it "可以計算整台購物車的總消費金額" do
     p1 = create(:product, price: 10)
     p2 = create(:product, price: 20)
@@ -78,5 +69,23 @@ RSpec.describe Cart, type: :model do
     5.times { cart.add(p2.id) }
 
     expect(cart.total_price).to be 1200
+  end
+
+  it "可以將購物車內容轉換成 Hash 並存到 Session 裡" do
+    p1 = create(:product, price: 100)
+    p2 = create(:product, price: 50)
+    cart = Cart.new
+
+    3.times { cart.add(p1.id) }
+    2.times { cart.add(p2.id) }
+
+    result = {
+      "items" => [
+        {"product_id" => 1, "quantity" => 3},
+        {"product_id" => 2, "quantity" => 2}
+      ]
+    }
+
+    expect(cart.to_hash).to eq result
   end
 end

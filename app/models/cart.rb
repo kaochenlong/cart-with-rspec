@@ -3,6 +3,17 @@ class Cart
     @items = []
   end
 
+  def to_hash
+    {
+      "items" => @items.map { |item|
+        {
+          "product_id" => item.product_id,
+          "quantity" => item.quantity
+        }
+      }
+    }
+  end
+
   def add(product_id, quantity = 1)
     found_item = @items.find { |item|
       item.product_id == product_id
