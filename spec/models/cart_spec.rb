@@ -52,4 +52,18 @@ RSpec.describe Cart, type: :model do
 
     expect(cart.total_price).to be 130
   end
+
+  it "特別活動聖誕節的時候全面打 9 折" do
+    p1 = create(:product, price: 10)
+    p2 = create(:product, price: 20)
+    cart = Cart.new
+
+    3.times { cart.add(p1.id) }
+    5.times { cart.add(p2.id) }
+
+    t = Time.local(Time.now.year, 12, 24, 10, 0, 0)
+    Timecop.travel(t)
+
+    expect(cart.total_price).to be 117
+  end
 end
