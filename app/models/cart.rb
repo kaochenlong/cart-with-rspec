@@ -1,4 +1,6 @@
 class Cart
+  attr_reader :items
+
   def initialize(items = [])
     @items = items
   end
@@ -6,9 +8,9 @@ class Cart
   def self.from_hash(hash = nil)
     items = []
 
-    if hash.is_a?(Hash) && hash[:items]
-      items = hash[:items].map { |item|
-        CartItem.new(item[:product_id], item[:quantity])
+    if hash.is_a?(Hash) && hash["items"]
+      items = hash["items"].map { |item|
+        CartItem.new(item["product_id"], item["quantity"])
       }
     end
 
@@ -17,10 +19,10 @@ class Cart
 
   def to_hash
     {
-      items: @items.map { |item|
+      "items" => @items.map { |item|
         {
-          product_id: item.product_id,
-          quantity: item.quantity
+          "product_id" => item.product_id,
+          "quantity" => item.quantity
         }
       }
     }
@@ -40,10 +42,6 @@ class Cart
 
   def empty?
     @items.empty?
-  end
-
-  def items
-    @items
   end
 
   def total_price
