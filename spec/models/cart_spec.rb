@@ -24,7 +24,7 @@ RSpec.describe Cart, type: :model do
   end
 
   it "商品可以放到購物車裡，也可以再拿出來" do
-    p1 = Product.create(title: "P1", price: 10)
+    p1 = create(:product, price: 10)
     cart = Cart.new
 
     cart.add(p1.id)
@@ -32,4 +32,7 @@ RSpec.describe Cart, type: :model do
     expect(cart.items.first.product).to be_a Product
     expect(cart.items.first.product.price).to be 10
   end
+
+  # it "每個 Cart Item 都可以計算它自己的金額（小計）" do
+  # end
 end
