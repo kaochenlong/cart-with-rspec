@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :products do
     member do
@@ -5,5 +7,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :cart, only: [:show, :destroy]
+  resource :cart, only: %i[show destroy]
 end

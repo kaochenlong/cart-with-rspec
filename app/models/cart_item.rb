@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CartItem
   attr_reader :product_id, :quantity
 
